@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Fire HUD & Sensitivity Sharing</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    h1 { text-align: center; color: #ff5722; }
+    .form-section, .list-section {
+      background: white; padding: 20px; border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    input, textarea, button {
+      display: block; width: 100%; margin: 10px 0; padding: 10px;
+      border-radius: 5px; border: 1px solid #ccc;
+    }
+    button { background: #ff5722; color: white; font-weight: bold; cursor: pointer; }
+    button:hover { background: #e64a19; }
+    .card {
+      background: #fff; border: 1px solid #ddd; border-radius: 10px;
+      padding: 15px; margin-bottom: 15px;
+    }
+    .card img { max-width: 100%; border-radius: 8px; }
+  </style>
+</head>
+<body>  <h1>🔥 Free Fire HUD & Sensitivity Sharing</h1>  <!-- Upload Form -->  <div class="form-section">
+    <h2>Share Your HUD / Sensitivity</h2>
+    <input type="text" id="playerName" placeholder="Your Name">
+    <textarea id="sensitivity" placeholder="Enter Sensitivity Settings (DPI, General, Red Dot, etc.)"></textarea>
+    <input type="file" id="hudImage" accept="image/*">
+    <button onclick="addPost()">Upload</button>
+  </div>  <!-- Display Section -->  <div class="list-section">
+    <h2>Community Posts</h2>
+    <div id="posts"></div>
+  </div>  <script>
+    function addPost() {
+      const name = document.getElementById('playerName').value;
+      const sensitivity = document.getElementById('sensitivity').value;
+      const imageInput = document.getElementById('hudImage');
+      const postsDiv = document.getElementById('posts');
+
+      if (!name || !sensitivity || !imageInput.files[0]) {
+        alert("Please fill all fields and upload an image.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.innerHTML = `
+          <h3>${name}</h3>
+          <p><strong>Sensitivity:</strong><br>${sensitivity}</p>
+          <img src="${e.target.result}" alt="HUD Screenshot">
+        `;
+        postsDiv.prepend(card);
+      };
+      reader.readAsDataURL(imageInput.files[0]);
+
+      // reset form
+      document.getElementById('playerName').value = "";
+      document.getElementById('sensitivity').value = "";
+      document.getElementById('hudImage').value = "";
+    }
+  </script></body>
+</html>
